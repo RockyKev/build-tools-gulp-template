@@ -1,16 +1,23 @@
-# Gulp template Liga A
-## Краткая инструкция по работе
-### Для начала работы у вас должент быть установлен:
-* Node.js v.10.15.3
-* Gulp v4
-* npm last version
-## Основные команды для работы
-* Установка - `npm i`
-* Запуск локального сервера - `npm start`
-* Сборка проекта без запуска локального сервера - `npm run-script build`
-* Запуск тестирования на соответствия код-гайдам - `npm test`
+# Gulp Template 
 
-## Все разработка ведёться в директории `source`
-## Итоговый код попадает в директорию `build`
+This was forked and rebuilt for the latest Node LTS.
 
-Если у вас есть желание что-то изменить или улучшить, пожалуйста, открывайте pull request с вашими комментариями.
+1. nvm i
+2. npm i
+3. npm run start
+4. npm run build
+
+## What we're solving for
+
+[] Scenario 1 - Combining Files
+[] Scenario 2 - Minify and obfuscate
+[] Scenario 3 - Vendor Prefixes
+[] Scenario 4 - Babel
+[] Scenario 5 - Compiling SCSS
+[] Scenario 6 - Generating Sourcemaps
+[] Scenario 7 - Linting
+[] Scenario 8 - Hot-Reloading
+[] Scenario 9 - Compiling into Web Langs 
+[] Scenario 10 - Borrowing Libraries and NPM
+[] Scenario 11 - Treeshaking
+
