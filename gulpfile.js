@@ -1,21 +1,29 @@
 "use strict";
 
-var gulp = require("gulp");
-var plumber = require("gulp-plumber");
-var sourcemap = require("gulp-sourcemaps");
-// var sass = require("gulp-sass");
-var sass = require('gulp-sass')(require('sass'));
-var postcss = require("gulp-postcss");
-var autoprefixer = require("autoprefixer");
-var server = require("browser-sync").create();
-var csso = require("gulp-csso");
-var rename = require("gulp-rename");
-var imagemin = require("gulp-imagemin");
-var webp = require("gulp-webp");
-var svgstore = require("gulp-svgstore")
-var posthtml = require("gulp-posthtml");
-var include = require("posthtml-include");
-var del = require("del");
+const gulp = require("gulp");
+const concat = require("gulp-concat");
+const plumber = require("gulp-plumber");
+const sourcemap = require("gulp-sourcemaps");
+const sass = require('gulp-sass')(require('sass'));
+const postcss = require("gulp-postcss");
+const autoprefixer = require("autoprefixer");
+const server = require("browser-sync").create();
+const csso = require("gulp-csso");
+const rename = require("gulp-rename");
+const imagemin = require("gulp-imagemin");
+const webp = require("gulp-webp");
+const svgstore = require("gulp-svgstore")
+const posthtml = require("gulp-posthtml");
+const include = require("posthtml-include");
+const del = require("del");
+
+/** Scenario 1 - combine files */
+gulp.task('js', function() {
+  return gulp.src('src/js/*.js')
+  .pipe(concat('index.js'))
+  .pipe(rename({suffix: '.min'}))
+  .pipe(gulp.dest('asset/js'))
+})
 
 gulp.task("css", function () {
   return gulp.src("src/sass/style.scss")
@@ -104,5 +112,5 @@ gulp.task("clean", function () {
   return del("build");
 });
 
-gulp.task("build", gulp.series("clean", "copy", "css", "sprite", "html"));
+gulp.task("build", gulp.series("clean", "copy", "css", "js", "sprite", "html"));
 gulp.task("start", gulp.series("build", "server"));
