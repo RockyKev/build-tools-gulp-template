@@ -17,6 +17,7 @@ const sourcemap = require("gulp-sourcemaps");
 const sass = require("gulp-sass")(require("sass"));
 const server = require("browser-sync").create();
 const svgstore = require("gulp-svgstore");
+const ts = require("gulp-typescript")
 const webp = require("gulp-webp");
 const uglify = require("gulp-uglify");
 
@@ -24,7 +25,7 @@ const uglify = require("gulp-uglify");
 gulp.task("js", function () {
   return gulp
     .src("src/js/*.js")
-    .pipe(eslint({ overrideConfigFile: 'eslint.config.js', warnIgnored: false}))
+    .pipe(eslint({ overrideConfigFile: 'eslint.config.js', warnIgnored: false})) // Scenario 7 - Linting
     .pipe(eslint.format())
     .pipe(concat("index.js")) //  Scenario 1 - combine files
     .pipe(babel({ presets: ["@babel/env"] })) // Scenario 4 - Babel
@@ -47,6 +48,17 @@ gulp.task("css", function () {
     .pipe(server.stream());
 });
 
+gulp.task("ts", function () {
+  return gulp.src('src/ts/*.ts')
+  .pipe(ts({
+      noImplicitAny: true,
+      outFile: 'typescript.js'
+  }))
+  .pipe(gulp.dest('asset/js'));
+})
+
+// Scenario 8 - Hot-Reloading
+// NOTE: I always get this wrong.
 gulp.task("server", function () {
   server.init({
     server: "asset/",
@@ -58,7 +70,7 @@ gulp.task("server", function () {
 
   gulp.watch("src/sass/**/*.{scss,sass}", gulp.series("css"));
   gulp.watch("src/img/icon-*.svg", gulp.series("sprite", "html", "refresh"));
-  gulp.watch("src/*.html", gulp.series("html", "refresh"));
+  gulp.watch("/*.html", gulp.series("html", "refresh"));
 });
 
 gulp.task("refresh", function (done) {
@@ -120,5 +132,5 @@ gulp.task("clean", function () {
   return del("build");
 });
 
-gulp.task("build", gulp.series("clean", "copy", "css", "js", "sprite", "html"));
+gulp.task("build", gulp.series("clean", "copy", "css", "js", "ts", "sprite", "html"));
 gulp.task("start", gulp.series("build", "server"));

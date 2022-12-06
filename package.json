@@ -22,11 +22,13 @@
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "3.0.x",
     "gulp-svgstore": "^9.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "gulp-webp": "^4.0.1",
     "pixel-glass": "^1.0.13",
     "posthtml-include": "^1.7.4",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "typescript": "^4.9.3"
   },
   "scripts": {
     "editorconfig": "editorconfig-cli",
@@ -49,5 +51,8 @@
     "source/js/**/*.js",
     "source/img/**/*.svg",
     "source/sass/**/*.{sass,scss}"
-  ]
+  ],
+  "dependencies": {
+    "console-log-img": "^4.0.2"
+  }
 }
