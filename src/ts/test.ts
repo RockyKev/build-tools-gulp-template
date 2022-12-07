@@ -1,5 +1,18 @@
-const dev = {
-  name: "Rocky",
-} as const;
+interface Content {
+  status: string;
+}
 
-console.log(`Hello there ${dev.name}! I'm outputting typescript!`)
+const tsContent: Content = {
+  status: "Everything",
+};
+
+const tsElement = document.querySelector<HTMLElement>("#ts")
+
+console.log(tsElement);
+
+const tsImage = tsElement.querySelector<HTMLImageElement>('img')
+const tsParagraph = tsElement.querySelector<HTMLElement>("p")
+
+tsImage.src = 'https://i.imgur.com/hJ8ua9B.jpeg';
+tsParagraph.textContent = `${tsContent['status']} is Working!`
+

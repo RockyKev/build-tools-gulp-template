@@ -1,6 +1,9 @@
-var dev = {
-    name: "Rocky"
+var tsContent = {
+    status: "Everything"
 };
-console.log("Hello there ".concat(dev.name, "! I'm outputting typescript!"));
-// const element = document.querySelector('#typescript');
-// (myRow.querySelector('.myClass') as HTMLInputElement).value = " a vaule";
+var tsElement = document.querySelector("#ts");
+console.log(tsElement);
+var tsImage = tsElement.querySelector('img');
+var tsParagraph = tsElement.querySelector("p");
+tsImage.src = 'https://i.imgur.com/hJ8ua9B.jpeg';
+tsParagraph.textContent = "".concat(tsContent['status'], " is Working!");
