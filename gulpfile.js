@@ -13,6 +13,7 @@ const plumber = require("gulp-plumber");
 const postcss = require("gulp-postcss");
 const posthtml = require("gulp-posthtml");
 const rename = require("gulp-rename");
+const rollup = require('gulp-rollup')
 const sourcemap = require("gulp-sourcemaps");
 const sass = require("gulp-sass")(require("sass"));
 const server = require("browser-sync").create();
@@ -24,7 +25,7 @@ const uglify = require("gulp-uglify");
 
 gulp.task("js", function () {
   return gulp
-    .src("src/js/*.js")
+    .src("src/js/**/*.js")
     .pipe(eslint({ overrideConfigFile: 'eslint.config.js', warnIgnored: false})) // Scenario 7 - Linting
     .pipe(eslint.format())
     .pipe(concat("index.js")) //  Scenario 1 - combine files
@@ -49,7 +50,16 @@ gulp.task("css", function () {
 });
 
 gulp.task("ts", function () {
-  return gulp.src('src/ts/*.ts')
+  return gulp.src('src/ts/**/*.ts')
+  .pipe(ts({
+      noImplicitAny: true,
+      outFile: 'typescript.js'
+  }))
+  .pipe(gulp.dest('asset/js'));
+})
+
+gulp.task("js-lib", function () {
+  return gulp.src('src/ts/**/*.ts')
   .pipe(ts({
       noImplicitAny: true,
       outFile: 'typescript.js'
@@ -78,21 +88,20 @@ gulp.task("refresh", function (done) {
   done();
 });
 
-gulp.task("images", function () {
+gulp.task("img", function () {
   return gulp
     .src("src/img/**/*.{png,jpg,svg}")
     .pipe(
       imagemin([
         imagemin.optipng({ optimizationLevel: 3 }),
         imagemin.mozjpeg({ quality: 75, progressive: true }),
-        imagemin.jpegtran({ progressive: true }),
         imagemin.svgo({
           plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
         }),
       ])
     )
 
-    .pipe(gulp.dest("src/img"));
+    .pipe(gulp.dest("asset/img"));
 });
 
 gulp.task("webp", function () {
@@ -102,13 +111,13 @@ gulp.task("webp", function () {
     .pipe(gulp.dest("src/img"));
 });
 
-gulp.task("sprite", function () {
-  return gulp
-    .src("src/img/{icon-*,htmlacademy*}.svg")
-    .pipe(svgstore({ inlineSvg: true }))
-    .pipe(rename("sprite_auto.svg"))
-    .pipe(gulp.dest("asset/img"));
-});
+// gulp.task("sprite", function () {
+//   return gulp
+//     .src("src/img/{icon-*,htmlacademy*}.svg")
+//     .pipe(svgstore({ inlineSvg: true }))
+//     .pipe(rename("sprite_auto.svg"))
+//     .pipe(gulp.dest("asset/img"));
+// });
 
 gulp.task("html", function () {
   return gulp
@@ -132,5 +141,5 @@ gulp.task("clean", function () {
   return del("build");
 });
 
-gulp.task("build", gulp.series("clean", "copy", "css", "js", "ts", "sprite", "html"));
+gulp.task("build", gulp.series("clean", "copy", "css", "js", "ts", "img", "html"));
 gulp.task("start", gulp.series("build", "server"));
