@@ -21,7 +21,8 @@ const ts = require("gulp-typescript");
 const webp = require("gulp-webp");
 const uglify = require("gulp-uglify");
 
-// roll up required plugins
+// Scenario 10 - Borrowing Libraries and NPM
+// Rollup is required for Gulp
 // via https://github.com/mcqua007/shopify-bare/blob/master/gulpfile.js
 const rollup = require('gulp-better-rollup');
 const { nodeResolve } = require('@rollup/plugin-node-resolve'); //allow rollup to parse npm_modules
