@@ -4,6 +4,7 @@ This is part of the [Build Tools Presentation](https://github.com/RockyKev/slide
 
 This gulp Starter Template was rebuilt for the latest Node LTS (v18.12.1).
 
+
 ## Installation
 1. nvm i
 2. npm i
@@ -11,6 +12,8 @@ This gulp Starter Template was rebuilt for the latest Node LTS (v18.12.1).
 4. npm run build
 
 ## Features
+
+Out of the box features like:
 
 * Combining Files
 * Minify and obfuscate
@@ -22,3 +25,5 @@ This gulp Starter Template was rebuilt for the latest Node LTS (v18.12.1).
 * Hot-Reloading
 * Compiling into Web Langs 
 * Borrowing Libraries and NPM
+
+TypeScript compiling. ES6 compiling. It's ready for the future.
