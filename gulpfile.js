@@ -13,20 +13,27 @@ const plumber = require("gulp-plumber");
 const postcss = require("gulp-postcss");
 const posthtml = require("gulp-posthtml");
 const rename = require("gulp-rename");
-const rollup = require('gulp-rollup')
 const sourcemap = require("gulp-sourcemaps");
 const sass = require("gulp-sass")(require("sass"));
 const server = require("browser-sync").create();
 const svgstore = require("gulp-svgstore");
-const ts = require("gulp-typescript")
+const ts = require("gulp-typescript");
 const webp = require("gulp-webp");
 const uglify = require("gulp-uglify");
 
+// roll up required plugins
+// via https://github.com/mcqua007/shopify-bare/blob/master/gulpfile.js
+const rollup = require('gulp-better-rollup');
+const { nodeResolve } = require('@rollup/plugin-node-resolve'); //allow rollup to parse npm_modules
+const commonjs = require('@rollup/plugin-commonjs'); //allow rollup to use npm_modiules by converting to es6 exports
+const rollupJson = require('@rollup/plugin-json'); //also used to use node modules
 
 gulp.task("js", function () {
   return gulp
     .src("src/js/**/*.js")
-    .pipe(eslint({ overrideConfigFile: 'eslint.config.js', warnIgnored: false})) // Scenario 7 - Linting
+    .pipe(
+      eslint({ overrideConfigFile: "eslint.config.js", warnIgnored: false })
+    ) // Scenario 7 - Linting
     .pipe(eslint.format())
     .pipe(concat("index.js")) //  Scenario 1 - combine files
     .pipe(babel({ presets: ["@babel/env"] })) // Scenario 4 - Babel
@@ -50,28 +57,24 @@ gulp.task("css", function () {
 });
 
 gulp.task("ts", function () {
-  return gulp.src('src/ts/**/*.ts')
-  .pipe(ts({
-      noImplicitAny: true,
-      outFile: 'typescript.js'
-  }))
-  .pipe(gulp.dest('asset/js'));
-})
+  return gulp
+    .src("src/ts/**/*.ts")
+    .pipe(
+      ts({
+        noImplicitAny: true,
+        outFile: "typescript.js",
+      })
+    )
+    .pipe(gulp.dest("asset/js"));
+});
 
 gulp.task("js-lib", function () {
-  return gulp.
-  src('src/lib/**/*.js')
-  .pipe(sourcemap.init())
-  .pipe(rollup({
-    input: 'src/lib/library.js',
-    output: {
-      file: 'bundle.js',
-      format: 'cjs'
-    }
-  }))
-  .pipe(sourcemap.write("."))
-  .pipe(gulp.dest('asset/js'));
-})
+  return gulp
+    .src("src/lib/**/*.js")
+    .pipe(sourcemap.init())
+    .pipe(rollup({ plugins: [commonjs(), nodeResolve({ preferBuiltins: true, browser: true })] }, 'iife'))
+    .pipe(gulp.dest("asset/js"));
+});
 
 // Scenario 8 - Hot-Reloading
 // NOTE: I always get this wrong.
@@ -147,5 +150,8 @@ gulp.task("clean", function () {
   return del("build");
 });
 
-gulp.task("build", gulp.series("clean", "copy", "css", "js", "ts", "js-lib", "img", "html"));
+gulp.task(
+  "build",
+  gulp.series("clean", "copy", "css", "js", "ts", "js-lib", "img", "html")
+);
 gulp.task("start", gulp.series("build", "server"));

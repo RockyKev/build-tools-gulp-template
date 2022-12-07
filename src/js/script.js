@@ -9,5 +9,5 @@ const jsImage = jsElement.querySelector("img")
 const jsHeader = jsElement.querySelector("h2")
 const jsContent = jsElement.querySelector("p")
 
-jsImage.src = 'https://i.imgur.com/EkXd1Hl.jpeg';
+jsImage.src = '/asset/img/happy-cat.png';
 jsContent.innerText = "Everything is working!";

@@ -11,6 +11,6 @@ const tsElement = document.querySelector<HTMLElement>("#ts")
 const tsImage = tsElement.querySelector<HTMLImageElement>('img')
 const tsParagraph = tsElement.querySelector<HTMLElement>("p")
 
-tsImage.src = 'https://i.imgur.com/hJ8ua9B.jpeg';
+tsImage.src = '/asset/img/happy-cat.png';
 tsParagraph.textContent = `${tsContent['status']} is Working!`
 

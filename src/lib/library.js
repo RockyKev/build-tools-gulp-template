@@ -6,8 +6,18 @@ initConsoleLogImg({
   printDimensions: true,
 });
 
+const consoleImage = '/asset/img/happy-cat.png';
 
 // Print an image from a URI, at original size
-console.img('https://openclipart.org/image/800px/5661');
+console.img(consoleImage);
 
 console.log("im here in library")
+
+const libElement = document.querySelector('#lib');
+
+const libImage = libElement.querySelector("img")
+const libHeader = libElement.querySelector("h2")
+const libContent = libElement.querySelector("p")
+
+libImage.src = consoleImage;
+libContent.innerText = "Everything is working!";
