@@ -59,11 +59,17 @@ gulp.task("ts", function () {
 })
 
 gulp.task("js-lib", function () {
-  return gulp.src('src/ts/**/*.ts')
-  .pipe(ts({
-      noImplicitAny: true,
-      outFile: 'typescript.js'
+  return gulp.
+  src('src/lib/**/*.js')
+  .pipe(sourcemap.init())
+  .pipe(rollup({
+    input: 'src/lib/library.js',
+    output: {
+      file: 'bundle.js',
+      format: 'cjs'
+    }
   }))
+  .pipe(sourcemap.write("."))
   .pipe(gulp.dest('asset/js'));
 })
 
@@ -141,5 +147,5 @@ gulp.task("clean", function () {
   return del("build");
 });
 
-gulp.task("build", gulp.series("clean", "copy", "css", "js", "ts", "img", "html"));
+gulp.task("build", gulp.series("clean", "copy", "css", "js", "ts", "js-lib", "img", "html"));
 gulp.task("start", gulp.series("build", "server"));

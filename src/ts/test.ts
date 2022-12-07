@@ -8,8 +8,6 @@ const tsContent: Content = {
 
 const tsElement = document.querySelector<HTMLElement>("#ts")
 
-console.log(tsElement);
-
 const tsImage = tsElement.querySelector<HTMLImageElement>('img')
 const tsParagraph = tsElement.querySelector<HTMLElement>("p")
 
